@@ -1,14 +1,111 @@
-# TaskBoard
+# 📝 Angular Kanban Todo App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.11.
+Aplicación moderna de tareas tipo Kanban construida con **Angular 17**, **Angular Material** y **Drag & Drop** para mover tareas entre columnas (`To Do`, `In Progress`, `Done`). Integrada con backend (API REST) para persistencia de tareas por usuario.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🚀 Tecnologías
+
+### Frontend
+- [✔️] Angular 17 Standalone
+- [✔️] Angular Material (UI)
+- [✔️] RxJS
+- [✔️] DragDropModule (CDK)
+- [✔️] Animaciones con Angular Animations
+- [✔️] Formulario reactivo
+- [✔️] HttpClient + Router
+
+### Backend (API REST)
+- `GET /users/:email` → busca usuario
+- `POST /users` → crea usuario
+- `GET /tasks/:userId` → carga tareas
+- `POST /tasks` → crea tarea
+- `PUT /tasks/:taskId` → actualiza
+- `DELETE /tasks/:taskId` → elimina
+
+---
+
+## 🧩 Arquitectura
+
+- `LoginComponent`: pantalla de inicio por email
+- `TaskBoardComponent`: Kanban completo con drag and drop
+- `TaskCardComponent`: visualización de tarea individual
+- `TaskFormComponent`: modal/form para crear o editar
+- `TaskService`: conecta con backend REST
+- `AuthService`: login + creación de usuario
+- `AuthGuard`: protege la ruta de tareas
+
+---
+
+## 📦 Estructura del proyecto
+```
+src/
+├── auth/
+│ ├── login.component.ts
+│ ├── login.component.html
+│ ├── login.component.scss
+│ ├── auth.service.ts
+│ └── auth.guard.ts
+├── tasks/
+│ ├── task-board.component.ts
+│ ├── task-board.component.html
+│ ├── task-board.component.scss
+│ ├── task-card.component.ts
+│ ├── task-card.component.html
+│ ├── task-card.component.scss
+│ ├── task-form.component.ts
+│ ├── task-form.component.html
+│ ├── task-form.component.scss
+│ ├── task.service.ts
+│ └── task-filter.pipe.ts
+├── models/
+│ └── task.model.ts
+└── app.routes.ts
+```
+---
+
+## ✅ Funcionalidades principales
+
+- 🔐 Login por email (crea usuario si no existe)
+- 🧠 Carga de tareas por usuario
+- ➕ Crear tareas desde cualquier columna
+- ✏️ Editar tarea en modal
+- 🗑️ Eliminar tarea
+- 🔄 Drag and drop para mover entre columnas
+- ✔️ Marcar como completada (mueve automáticamente a `Done`)
+- 🔎 Búsqueda en tiempo real por título o descripción
+- 🌙 UI moderna y responsive
+- 🔒 Protección con `AuthGuard` para `/tasks`
+- 📦 Persiste con backend REST
+
+---
+
+## ⚙️ Instalación y ejecución
 
 ```bash
+# Clona el repositorio
+git clone https://github.com/tu-usuario/todo-kanban-app.git
+cd todo-kanban-app
+
+# Instala dependencias
+npm install
+
+# Ejecuta el frontend
 ng serve
+
+ng test
+
+
 ```
+
+### Pruebas cubiertas
+
+- ✅ **TaskService**: CRUD de tareas
+- ✅ **TaskBoardComponent**: lógica de UI básica
+- ✅ **AuthService**: login y creación
+- ✅ **AuthGuard**: protección de rutas
+
+
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 

@@ -1,0 +1,12 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="usuario@correo.com" />
+      <mat-error *ngIf="form.get('email')?.invalid">Email inválido</mat-error>
+    </mat-form-field>
+  
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+      Iniciar sesión
+    </button>
+  </form>
+  

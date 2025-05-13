@@ -1,0 +1,115 @@
+
+<header class="board-header">
+  <div class="user-section">
+    <mat-icon>account_circle</mat-icon>
+    <span class="user-email">{{ userEmail }}</span>
+  </div>
+
+  <button mat-flat-button color="warn" (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    Logout
+  </button>
+</header>
+
+<div class="filter-bar">
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput [(ngModel)]="searchText" placeholder="Search tasks..." />
+  </mat-form-field>
+</div> 
+  
+<div class="board-container">
+    <!-- TO DO Column -->
+    <div class="column"
+         cdkDropList
+         [ngClass]="{ 'column-hovered': hoveredColumn === 'todo' }"
+         id="todoList"
+         [cdkDropListData]="todo"
+         [cdkDropListConnectedTo]="['inProgressList', 'doneList']"
+         (cdkDropListDropped)="drop($event, 'todo')"
+         (cdkDropListEntered)="hoveredColumn = 'todo'"
+        (cdkDropListExited)="hoveredColumn = null"
+         >
+      
+      <div class="column-header">
+        <h2>To Do</h2>
+        <button mat-icon-button color="primary" (click)="showForm['todo'] = !showForm['todo']">
+          <mat-icon>{{ showForm['todo'] ? 'close' : 'add' }}</mat-icon>
+        </button>
+      </div>
+  
+      <app-task-form *ngIf="showForm['todo']" (submitTask)="onAddTask($event)" (cancel)="showForm['todo'] = false"></app-task-form>
+  
+      <div *ngFor="let task of todo | taskFilter: searchText" cdkDrag>
+        <app-task-card
+          [task]="task"
+          (edit)="onEdit(task)"
+          (delete)="onDelete(task)"
+          (toggleComplete)="onToggleComplete(task)"
+        ></app-task-card>
+      </div>
+    </div>
+  
+    <!-- IN PROGRESS Column -->
+    <div class="column"
+         cdkDropList
+         [ngClass]="{ 'column-hovered': hoveredColumn === 'in-progress' }"
+         id="inProgressList"
+         [cdkDropListData]="inProgress"
+         [cdkDropListConnectedTo]="['todoList', 'doneList']"
+         (cdkDropListDropped)="drop($event, 'in-progress')"
+         (cdkDropListEntered)="hoveredColumn = 'in-progress'"
+          (cdkDropListExited)="hoveredColumn = null"
+         >
+      
+      <div class="column-header">
+        <h2>In Progress</h2>
+        <button mat-icon-button color="primary" (click)="showForm['in-progress'] = !showForm['in-progress']">
+          <mat-icon>{{ showForm['in-progress'] ? 'close' : 'add' }}</mat-icon>
+        </button>
+      </div>
+  
+      <app-task-form *ngIf="showForm['in-progress']" (submitTask)="onAddTask($event)" (cancel)="showForm['in-progress'] = false"></app-task-form>
+  
+      <div *ngFor="let task of inProgress | taskFilter: searchText" cdkDrag>
+        <app-task-card
+          [task]="task"
+          (edit)="onEdit(task)"
+          (delete)="onDelete(task)"
+          (toggleComplete)="onToggleComplete(task)"
+        ></app-task-card>
+      </div>
+    </div>
+  
+    <!-- DONE Column -->
+    <div class="column"
+         cdkDropList
+         [ngClass]="{ 'column-hovered': hoveredColumn === 'done' }"
+         id="doneList"
+         [cdkDropListData]="done"
+         [cdkDropListConnectedTo]="['todoList', 'inProgressList']"
+         (cdkDropListDropped)="drop($event, 'done')"
+         (cdkDropListEntered)="hoveredColumn = 'done'"
+        (cdkDropListExited)="hoveredColumn = null"
+         >
+      
+      <div class="column-header">
+        <h2>Done</h2>
+        <button mat-icon-button color="primary" (click)="showForm['done'] = !showForm['done']">
+          <mat-icon>{{ showForm['done'] ? 'close' : 'add' }}</mat-icon>
+        </button>
+      </div>
+  
+      <app-task-form *ngIf="showForm['done']" (submitTask)="onAddTask($event)" (cancel)="showForm['done'] = false"></app-task-form>
+  
+      <div *ngFor="let task of done | taskFilter: searchText" cdkDrag>
+        <app-task-card
+          [task]="task"
+          (edit)="onEdit(task)"
+          (delete)="onDelete(task)"
+          (toggleComplete)="onToggleComplete(task)"
+        ></app-task-card>
+      </div>
+    </div>
+  </div>
+  

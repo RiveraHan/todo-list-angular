@@ -1,0 +1,14 @@
+.login-form {
+    max-width: 400px;
+    margin: 5rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  ::ng-deep .snackbar-info {
+    background-color: #2196f3;
+    color: #fff;
+  }
+  
+  
