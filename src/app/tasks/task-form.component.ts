@@ -23,7 +23,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./task-form.component.scss']
 })
 export class TaskFormComponent implements OnInit {
-  @Input() task: Task | null = null;
+  @Input() task: Partial<Task> | null = null;
   @Output() submitTask = new EventEmitter<Omit<Task, 'id' | 'createdAt'>>();
   @Output() cancel = new EventEmitter<void>();
 
@@ -43,19 +43,17 @@ export class TaskFormComponent implements OnInit {
   }  
   
   ngOnInit(): void {
-    const t = this.task || this.data?.task;
-    if (t) {
-      this.form.patchValue(t);
-    }
-  }  
+  const t = this.task || this.data?.task;
+  if (t) {
+    this.form.patchValue(t);
+  } else {
+    this.form.patchValue({ status: 'todo' });
+  }
+}
 
   onSubmit() {
     if (this.form.valid) {
       const taskData = this.form.value;
-  
-      if (!taskData.status) {
-        taskData.status = 'todo';
-      }
   
       this.submitTask.emit(taskData);
   
@@ -63,6 +61,7 @@ export class TaskFormComponent implements OnInit {
         this.dialogRef.close();
       } else {
         this.form.reset({ title: '', description: '', status: 'todo' });
+        this.cancel.emit(); 
       }
     }
   }

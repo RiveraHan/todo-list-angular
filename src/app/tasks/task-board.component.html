@@ -38,7 +38,7 @@
         </button>
       </div>
   
-      <app-task-form *ngIf="showForm['todo']" (submitTask)="onAddTask($event)" (cancel)="showForm['todo'] = false"></app-task-form>
+      <app-task-form *ngIf="showForm['todo']" [task]="{ status: 'todo' }" (submitTask)="onAddTask($event)" (cancel)="showForm['todo'] = false"></app-task-form>
   
       <div *ngFor="let task of todo | taskFilter: searchText" cdkDrag>
         <app-task-card
@@ -69,7 +69,7 @@
         </button>
       </div>
   
-      <app-task-form *ngIf="showForm['in-progress']" (submitTask)="onAddTask($event)" (cancel)="showForm['in-progress'] = false"></app-task-form>
+      <app-task-form *ngIf="showForm['in-progress']" [task]="{ status: 'in-progress' }" (submitTask)="onAddTask($event)" (cancel)="showForm['in-progress'] = false"></app-task-form>
   
       <div *ngFor="let task of inProgress | taskFilter: searchText" cdkDrag>
         <app-task-card
@@ -100,7 +100,7 @@
         </button>
       </div>
   
-      <app-task-form *ngIf="showForm['done']" (submitTask)="onAddTask($event)" (cancel)="showForm['done'] = false"></app-task-form>
+      <app-task-form *ngIf="showForm['done']" [task]="{ status: 'done' }" (submitTask)="onAddTask($event)" (cancel)="showForm['done'] = false"></app-task-form>
   
       <div *ngFor="let task of done | taskFilter: searchText" cdkDrag>
         <app-task-card
